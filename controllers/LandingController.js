@@ -21,6 +21,6 @@ landing.setup = function( app, gateways, clients ) {
   var logger = require(__dirname + '/../services/logger');
   
 
-  app.use('/login', express.static(__dirname + '/../landing/build'));
+  app.use('/landing', express.static(__dirname + '/../landing/build'));
   
 }

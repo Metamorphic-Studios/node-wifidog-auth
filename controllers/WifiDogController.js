@@ -77,7 +77,7 @@ wifidog.setup = function( app, gateways, clients ) {
       case 'failed_validation':
         clients.set( ip, c.token, c.gwid, Math.floor( now.format( 'x' ) ) );
       case 'activate':
-        res.redirect( '/login' );
+        res.redirect( '/landing' );
         break;
       }
       
