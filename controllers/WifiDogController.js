@@ -37,7 +37,6 @@ wifidog.setup = function( app, gateways, clients ) {
     
     console.log( 'Login with IP: ' + ip );
 
-   res.send('hi');
     if ( !c ) {
       // Generate a token for this client
       var crypt = require('crypto');
@@ -47,10 +46,11 @@ wifidog.setup = function( app, gateways, clients ) {
       clients.set( ip, token, req.query.gw_id, Math.floor( now.format( 'x' ) ) );
       clients.setAuthType( ip, clients.AUTH_TYPES.AUTH_VALIDATION );
       
+       console.log("new client", ip);
       // Save changes
       clients.save();
     }
-    
+   console.log(req.query);    
     // Register token with gateway
     res.redirect( 'http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token );
   });
