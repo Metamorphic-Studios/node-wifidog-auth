@@ -36,7 +36,8 @@ wifidog.setup = function( app, gateways, clients ) {
     var c = clients.get( ip );
     
     console.log( 'Login with IP: ' + ip );
-    
+
+   res.send('hi');
     if ( !c ) {
       // Generate a token for this client
       var crypt = require('crypto');
