@@ -2,6 +2,7 @@
   "name": "landing",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/landing",
   "dependencies": {
     "react": "^16.2.0",
     "react-button": "^1.2.1",
