@@ -31,8 +31,9 @@ portal.setup( app, gateways, clients );
 var panel = require( __dirname + '/controllers/PanelController.js' );
 panel.setup( app, gateways, clients );
 
-var google = require( __dirname + '/controllers/GoogleController.js' );
-google.setup( app, gateways, clients );
+var landing = require(__dirname + '/controllers/LandingController.js');
+landing.setup(app, gateways, clients);
+
 
 var content = require( __dirname + '/controllers/StaticContentServer.js' );
 content.setup( app, express );
