@@ -28,6 +28,7 @@ wifidog.setup = function( app, gateways, clients ) {
     var now = moment();
     
     // Get the client IP
+   console.log("Forwarded for", req.headers['x-forwarded-for']);
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     var token = '';
     
