@@ -33,26 +33,25 @@ wifidog.setup = function( app, gateways, clients ) {
     
     // If we have the client, send its information. Otherwise send information
     // that is generated now.
-    var c = clients.get( ip );
-    
-    console.log( 'Login with IP: ' + ip );
+      clients.get(ip, (err, client) => {
+         if(err) return console.log(err);
 
-    if ( !c ) {
-      // Generate a token for this client
-      var crypt = require('crypto');
-      token = crypt.randomBytes( 64 ).toString('hex');
-    
-      // Update the client information
-      clients.set( ip, token, req.query.gw_id, Math.floor( now.format( 'x' ) ) );
-      clients.setAuthType( ip, clients.AUTH_TYPES.AUTH_VALIDATION );
-      
-       console.log("new client", ip);
-      // Save changes
-      clients.save();
-    }
-   console.log(req.query);    
-    // Register token with gateway
-    res.redirect( 'http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token );
+         if(!client){
+            var crypt = require('crypto');
+            token = crypt.randomBytes(64).toString('hex');
+
+            clients.set(ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
+            
+            });
+            
+            clients.setAuthType(ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
+            
+            });
+         }
+
+         res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);
+
+      });
   });
   
   /**
