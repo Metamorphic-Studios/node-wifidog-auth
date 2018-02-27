@@ -42,8 +42,8 @@ wifidog.setup = function( app, gateways, clients ) {
             clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
             
             });
-            
-            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
+            //AUTH_VALIDATION
+            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_ALLOWED, (err, data) => {
             
             });
          }
