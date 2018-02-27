@@ -24,13 +24,13 @@ class Clients {
    }
 
    set(ip, token, gw_id, last_ping, cb){
-      this.db.collection('clients').update({ipAddress: ip}, {token: token, gateway: gw_id, lastSeen: last_ping}, {upsert: true}, (err, data) => {
+      this.db.collection('clients').update({ipAddress: ip, {$set: { token: token, gateway: gw_id, lastSeen: last_ping }}, {upsert: true}, (err, data) => {
          cb(err, data);
       });
    }
 
    setAuthType(ip, auth, cb){
-      this.db.collection('clients').update({ipAddress: ip}, {authType: auth}, {upsert: true}, cb);
+      this.db.collection('clients').update({ipAddress: ip}, {$set: {authType: auth}}, {upsert: true}, cb);
    }
 }
 
