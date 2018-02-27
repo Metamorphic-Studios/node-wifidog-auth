@@ -24,7 +24,7 @@ class Clients {
    }
 
    set(ip, token, gw_id, last_ping, cb){
-      this.db.collection('clients').update({ipAddress: ip, {$set: { token: token, gateway: gw_id, lastSeen: last_ping }}, {upsert: true}, (err, data) => {
+      this.db.collection('clients').update({ipAddress: ip}, {$set: { token: token, gateway: gw_id, lastSeen: last_ping }}, {upsert: true}, (err, data) => {
          cb(err, data);
       });
    }
