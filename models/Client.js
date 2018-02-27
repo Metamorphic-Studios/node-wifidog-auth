@@ -1,14 +1,15 @@
+var MongoClient = require('mongodb').MongoClient;
 
-const AUTH_TYPES = {
+class Clients {
+   constructor(opts){
+   
+   this.AUTH_TYPES = {
    AUTH_DENIED: 0,
    AUTH_VALIDATION_FAILED: 6,
    AUTH_ALLOWED: 1,
    AUTH_VALIDATION: 5,
    AUTH_ERROR: -1
 }
-
-class Clients {
-   constructor(opts){
 
       MongoClient.connect(opts.url, (err, db) => {
          this.db = db.db(opts.db);
