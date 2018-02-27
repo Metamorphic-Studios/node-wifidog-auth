@@ -31,21 +31,20 @@ wifidog.setup = function( app, gateways, clients ) {
    console.log("Forwarded for", req.headers['x-forwarded-for']);
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     var token = '';
-      console.log(req.query);    
     // If we have the client, send its information. Otherwise send information
     // that is generated now.
-      clients.get(ip, (err, client) => {
+      clients.get(req.query.ip, (err, client) => {
          if(err) return console.log(err);
 
          if(!client){
             var crypt = require('crypto');
             token = crypt.randomBytes(64).toString('hex');
 
-            clients.set(ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
+            clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
             
             });
             
-            clients.setAuthType(ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
+            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
             
             });
          }
