@@ -51,54 +51,31 @@ protocol.setup = function( app, gateways, clients ) {
     var nowInSeconds = Math.floor( now.format( 'x' ) );
     
     // Which client?
-    var c = clients.get( req.query.ip );
-    
-    // If we have the client
-    if ( c ) {
-      
-      // Is this mac in the allowed list? If so we override the authentication.
-      if ( config.access.allowedMacs[ req.query.mac ] ) {
-        c.auth = clients.AUTH_TYPES.AUTH_ALLOWED;
-        
-        clients.setEmail( req.query.ip, '', config.access.allowedMacs[ req.query.mac ] );
-      }
-      
-      auth = c.auth;
-      
-      switch ( auth ) {
-      case clients.AUTH_TYPES.AUTH_VALIDATION:
-        // Did we timeout?
-        if ( nowInSeconds > c.lastPingTime + config.timeouts.validation ) {
-          clients.setAuthType( req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION_FAILED );
-          auth = clients.AUTH_TYPES.AUTH_VALIDATION_FAILED
-        }
-        
-        break;
-      case clients.AUTH_TYPES.AUTH_ALLOWED:
-        // Did we timeout? We expect user to validate again.
-        if ( nowInSeconds > c.lastPingTime + config.timeouts.expiration ) {
-          
-          // Set the last logout time
-          clients.setLogoutTime( req.query.ip, c.lastPingTime );
-          
-          clients.setLastPing( req.query.ip, Math.floor( now.format( 'x' ) ) );
-          clients.setAuthType( req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION );
-          auth = clients.AUTH_TYPES.AUTH_VALIDATION
-        } else {
-          // Update the server information
-          clients.setStatistical( req.query.ip, req.query.stage, req.query.mac, 
-            req.query.incoming, req.query.outgoing, nowInSeconds );
-        }
-          
-        break;
-      }
-      
-      // Save state
-      clients.save();
-    }
+    clients.get(req.query.ip, (err, data) => {
+         if(data){
+            
+            switch(data.auth){
+               case clients.AUTH_TYPES.AUTH_VALIDATION:
+                  if(nowInSeconds > data.lastSeen + config.timeouts.validation) {
+                     clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION_FAILED);
+                     auth = clients.AUTH_TYPES.AUTH_VALIDATION_FAILED;
+                  }
+                  break;
+               case clients.AUTH_TYPES.AUTH_ALLOWED:
+                  if(nowInSeconds > data.lastSeen + config.timeouts.expiration){
+                     //Set last ping
+                     clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION);
+                     auth = clients.AUTH_TYPES.AUTH_VALIDATION;
+                  }
+                  break;
+            }
+            
+         }
+
+       console.log( 'IP: ' + req.query.ip + ', Auth: ' + auth );
+       
+       res.send( 'Auth: ' + auth );
+    });
      
-    console.log( 'IP: ' + req.query.ip + ', Auth: ' + auth );
-    
-    res.send( 'Auth: ' + auth );
   });
 }
