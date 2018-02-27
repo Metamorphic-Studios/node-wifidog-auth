@@ -63,7 +63,6 @@ wifidog.setup = function( app, gateways, clients ) {
     
     // If we have the client, send its information. Otherwise send information
     // that is generated now
-      console.log(req.query);
       clients.get( ip , (err, data) => {
       var moment = require('moment');
        var now = moment();
@@ -75,6 +74,7 @@ wifidog.setup = function( app, gateways, clients ) {
                clients.set(ip, data.token, data.gateway, Math.floor(now.format('x')), (err, data) => {
                
                });
+               break;
             case 'activate':
                res.redirect('/landing');
                break;
