@@ -23,6 +23,10 @@ class Clients {
       });
    }
 
+   setByToken(token, socialBlob, cb){
+      this.db.collection('clients').update({token: token}, {$set: { socialData: socialBlob, authType: this.AUTH_TYPES.AUTH_ALLOWED} }, {upsert: true}, cb);
+   }
+
    set(ip, token, gw_id, last_ping, cb){
       this.db.collection('clients').update({ipAddress: ip}, {$set: { token: token, gateway: gw_id, lastSeen: last_ping }}, {upsert: true}, (err, data) => {
          cb(err, data);
