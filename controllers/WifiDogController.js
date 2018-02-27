@@ -58,7 +58,8 @@ wifidog.setup = function( app, gateways, clients ) {
 	app.get( '/gw_message.php', function( req, res ) {
     // Get the client IP
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    
+      console.log(req.query);
+      console.log(req.headers);
     // If we have the client, send its information. Otherwise send information
     // that is generated now
       clients.get( ip , (err, data) => {
