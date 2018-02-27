@@ -12,6 +12,7 @@ class Clients {
 }
 
       MongoClient.connect(opts.url, (err, db) => {
+         if(err) console.log(err);
          this.db = db.db(opts.db);
       });
    }
