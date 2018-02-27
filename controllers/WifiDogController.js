@@ -28,7 +28,6 @@ wifidog.setup = function( app, gateways, clients ) {
     var now = moment();
     
     // Get the client IP
-   console.log("Forwarded for", req.headers['x-forwarded-for']);
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     var token = '';
     // If we have the client, send its information. Otherwise send information
@@ -74,9 +73,8 @@ wifidog.setup = function( app, gateways, clients ) {
                clients.set(ip, data.token, data.gateway, Math.floor(now.format('x')), (err, data) => {
                
                });
-               break;
             case 'activate':
-               res.redirect('/landing');
+               res.redirect('/landing?token=' + data.token);
                break;
          }
        }else{
