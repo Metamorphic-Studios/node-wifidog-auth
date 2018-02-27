@@ -63,29 +63,25 @@ wifidog.setup = function( app, gateways, clients ) {
     
     // If we have the client, send its information. Otherwise send information
     // that is generated now.
-    var c = clients.get( ip );
-    
-    // Get the moment now
-    var moment = require( 'moment' );
-    var now = moment();
-    
-    console.log( 'IP: ' + ip + ', GW-Message: ' + req.query.message );
-    
-    if ( c ) {
-      switch( req.query.message ) {
-      case 'denied':
-      case 'failed_validation':
-        clients.set( ip, c.token, c.gwid, Math.floor( now.format( 'x' ) ) );
-      case 'activate':
-        res.redirect( '/landing' );
-        break;
-      }
-      
-      // Save changes
-      clients.save();
-    } else {    
-      res.send( 'Access Denied!' );
-    }
+    clients.get( ip , (err, data) => {
+      var moment = require('moment');
+       var now = moment();
+       console.log("IP: " + ip + ", GW-Message: " + req.query.message);
+       if(data){
+         switch(req.query.message){
+            case 'denied':
+            case 'failed_validation':
+               clients.set(ip, data.token, data.gateway, Math.floor(now.format('x')), (err, data) => {
+               
+               });
+            case 'activate':
+               res.redirect('/landing');
+               break;
+         }
+       }else{
+         res.send('Access Denied!');
+       }
+    });
   });
    
 }
