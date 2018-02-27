@@ -62,8 +62,9 @@ wifidog.setup = function( app, gateways, clients ) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     
     // If we have the client, send its information. Otherwise send information
-    // that is generated now.
-    clients.get( ip , (err, data) => {
+    // that is generated now
+      console.log(req.query);
+      clients.get( ip , (err, data) => {
       var moment = require('moment');
        var now = moment();
        console.log("IP: " + ip + ", GW-Message: " + req.query.message);
