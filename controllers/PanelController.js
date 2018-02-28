@@ -22,7 +22,18 @@ panel.setup = function( app, gateways, clients ) {
 	/**
 	 * Receive request to get list of all clients.
 	 */
-	app.get( '/api/clients', function( req, res ) {
+   app.post('/api/clients/activate', (req, res) => {
+      console.log(req.body);
+      var token = req.body.token; 
+      var provider = req.body.provider;
+      var user = req.body.user;
+
+     clients.setByToken(token, {provider: provider, user: user}, (err, data) => {
+         console.log(err, data); 
+     });
+   });
+
+   app.get( '/api/clients', function( req, res ) {
     
     // Get the client IP
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
