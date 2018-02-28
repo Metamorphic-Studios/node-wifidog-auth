@@ -62,11 +62,12 @@ wifidog.setup = function( app, gateways, clients ) {
       console.log(req.headers);
     // If we have the client, send its information. Otherwise send information
     // that is generated now
-      clients.get( ip , (err, data) => {
+      clients.get(req.query.ip , (err, data) => {
       var moment = require('moment');
        var now = moment();
        console.log("IP: " + ip + ", GW-Message: " + req.query.message);
        if(data){
+          console.log(data);
          switch(req.query.message){
             case 'denied':
             case 'failed_validation':
