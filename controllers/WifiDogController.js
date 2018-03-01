@@ -40,14 +40,12 @@ wifidog.setup = function( app, gateways, clients ) {
             token = crypt.randomBytes(64).toString('hex');
 
             clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
-            
+                   res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);  
             });
 /*            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
             
             });*/
          }
-
-         res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);
 
       });
   });
