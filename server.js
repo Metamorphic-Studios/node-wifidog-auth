@@ -14,6 +14,10 @@ var logger = require( __dirname + '/services/logger' );
 var express = require( 'express' );
 var app = express();
 
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+
 // Initialize the models.
 var gateways = require( __dirname + '/models/Gateways.js' );
 var clientStore = require( __dirname + '/models/Client.js' );
