@@ -54,7 +54,7 @@ protocol.setup = function( app, gateways, clients ) {
     clients.get(req.query.ip, (err, data) => {
          if(data){
             
-            switch(data.auth){
+            switch(data.authType){
                case clients.AUTH_TYPES.AUTH_VALIDATION:
                   if(nowInSeconds > data.lastSeen + config.timeouts.validation) {
                      clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION_FAILED);
