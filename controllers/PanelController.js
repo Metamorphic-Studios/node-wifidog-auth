@@ -29,7 +29,7 @@ panel.setup = function( app, gateways, clients ) {
       var user = req.body.user;
 
      clients.setByToken(token, {provider: provider, user: user}, (err, data) => {
-         console.log(err, data); 
+         res.send((err) ? {error: err} : data);
      });
    });
 
