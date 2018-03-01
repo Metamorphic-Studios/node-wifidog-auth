@@ -53,7 +53,7 @@ protocol.setup = function( app, gateways, clients ) {
     // Which client?
     clients.get(req.query.ip, (err, data) => {
          if(data){
-            
+           console.log("Authing", data); 
             switch(data.authType){
                case clients.AUTH_TYPES.AUTH_VALIDATION:
                   if(nowInSeconds > data.lastSeen + config.timeouts.validation) {
@@ -62,11 +62,11 @@ protocol.setup = function( app, gateways, clients ) {
                   }
                   break;
                case clients.AUTH_TYPES.AUTH_ALLOWED:
-                  if(nowInSeconds > data.lastSeen + config.timeouts.expiration){
+/*                  if(nowInSeconds > data.lastSeen + config.timeouts.expiration){
                      //Set last ping
                      clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION);
                      auth = clients.AUTH_TYPES.AUTH_VALIDATION;
-                  }
+                  }*/
                   break;
             }
             
