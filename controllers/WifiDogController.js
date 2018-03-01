@@ -42,9 +42,9 @@ wifidog.setup = function( app, gateways, clients ) {
             clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
             
             });
-            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
+/*            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
             
-            });
+            });*/
          }
 
          res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);
@@ -58,8 +58,6 @@ wifidog.setup = function( app, gateways, clients ) {
 	app.get( '/gw_message.php', function( req, res ) {
     // Get the client IP
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      console.log(req.query);
-      console.log(req.headers);
     // If we have the client, send its information. Otherwise send information
     // that is generated now
       clients.get(req.query.ip , (err, data) => {
