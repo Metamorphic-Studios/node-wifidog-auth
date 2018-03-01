@@ -53,13 +53,14 @@ protocol.setup = function( app, gateways, clients ) {
     // Which client?
     clients.get(req.query.ip, (err, data) => {
          if(data){
+            auth = data.authType;
            console.log("Authing", data); 
             switch(data.authType){
                case clients.AUTH_TYPES.AUTH_VALIDATION:
-                  if(nowInSeconds > data.lastSeen + config.timeouts.validation) {
+    /*              if(nowInSeconds > data.lastSeen + config.timeouts.validation) {
                      clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION_FAILED);
                      auth = clients.AUTH_TYPES.AUTH_VALIDATION_FAILED;
-                  }
+                  }*/
                   break;
                case clients.AUTH_TYPES.AUTH_ALLOWED:
 /*                  if(nowInSeconds > data.lastSeen + config.timeouts.expiration){
