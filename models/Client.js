@@ -23,6 +23,10 @@ class Clients {
       });
    }
 
+   getByToken(token, cb){
+      this.db.collection('clients').find({token: token}, cb);
+   }
+
    setByToken(token, socialBlob, cb){
       this.db.collection('clients').update({token: token}, {$set: { socialData: socialBlob, authType: this.AUTH_TYPES.AUTH_ALLOWED} }, {upsert: true}, cb);
    }

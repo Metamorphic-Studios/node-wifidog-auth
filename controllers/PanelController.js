@@ -29,7 +29,10 @@ panel.setup = function( app, gateways, clients ) {
       var user = req.body.user;
 
      clients.setByToken(token, {provider: provider, user: user}, (err, data) => {
-         res.send((err) ? {error: err} : data);
+         clients.getByToken(token, (err, user) => {
+            var gateway = gateways.get(user.gateway);
+            res.send((err) ? {error: err} : {redirect: "http://" + gateway.gwIP + ":2060/wifidog/auth?token=" + token});
+         });
      });
    });
 
