@@ -81,6 +81,9 @@ wifidog.setup = function( app, gateways, clients ) {
             case 'activate':
                res.redirect('/landing?token=' + data.token);
                break;
+            default:
+               console.log(req.query.message);
+               break;
          }
        }else{
          res.send('Access Denied!');
