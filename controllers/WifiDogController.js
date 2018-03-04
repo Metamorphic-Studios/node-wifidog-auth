@@ -37,7 +37,7 @@ wifidog.setup = function( app, gateways, clients ) {
     var token = '';
     // If we have the client, send its information. Otherwise send information
     // that is generated now.
-      gateways.set(req.query.gw_id, req.query.gw_address + ":" + req.query.gw_port, 0, 0, 0, 0, Date.now());
+      gateways.set(req.query.gw_id, req.query.gw_address + ":" + req.query.gw_port, Date.now()); 
       clients.get(ip, (err, client) => {
          if(err) return console.log(err);
 

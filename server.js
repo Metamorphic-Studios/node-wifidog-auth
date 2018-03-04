@@ -19,9 +19,10 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 // Initialize the models.
-var gateways = require( __dirname + '/models/Gateways.js' );
+var gatewayStore = require( __dirname + '/models/Gateways.js' );
 var clientStore = require( __dirname + '/models/Client.js' );
 
+var gateways = new gatewayStore({url: 'mongodb://localhost', db: 'wifi'});
 var clients = new clientStore({url: 'mongodb://localhost', db: 'wifi'});
 
 // Load the clients from last time.
