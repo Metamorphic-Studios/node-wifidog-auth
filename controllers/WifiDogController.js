@@ -53,6 +53,7 @@ wifidog.setup = function( app, gateways, clients ) {
 /*            clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
             
             });*/
+            });
          }else{
             if(client.token && client.authType){
                res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + client.token);
