@@ -31,10 +31,12 @@ protocol.setup = function( app, gateways, clients ) {
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     
     // Update the server information
-    gateways.set( req.query.gw_id, ip, req.query.sys_uptime, req.query.sys_memfree, 
-      req.query.sys_load, req.query.wifidog_uptime, Math.floor( now.format( 'x' ) ) );
-    
+      //
+    gateways.set( req.query.gw_id, '192.168.182.1:2060', Math.floor( now.format( 'x' ) ), (err, data) => {
     res.send( 'Pong' );
+    });
+    
+    
   });
   
 	/**
