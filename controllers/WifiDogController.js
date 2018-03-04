@@ -22,17 +22,18 @@ wifidog.setup = function( app, gateways, clients ) {
 	 * Receive request to login
 	 */
 	app.get( '/login', function( req, res ) {
-      console.log("Hit login"); 
     // Get the moment now
     var moment = require( 'moment' );
     var now = moment();
     
     // Get the client IP
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var ip = req.query.ip;
+    
     var token = '';
     // If we have the client, send its information. Otherwise send information
     // that is generated now.
-      clients.get(req.query.ip, (err, client) => {
+      gateways.set(req.query.gw_id, req.query.gw_ip, 0, 0, 0, 0, Date.now());
+      clients.get(ip, (err, client) => {
          if(err) return console.log(err);
 
          if(!client){
@@ -42,7 +43,7 @@ wifidog.setup = function( app, gateways, clients ) {
             clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
                console.log(err);
                clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
-                  
+                  console.log(gateways.get(req.query.gw_id)); 
                   console.log(err);
                   console.log("Redirect");
                   res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);  
