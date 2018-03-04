@@ -42,9 +42,7 @@ wifidog.setup = function( app, gateways, clients ) {
 
             clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
                console.log(err);
-               clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => {
-                  console.log(gateways.get(req.query.gw_id)); 
-                  console.log(err);
+               clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => { 
                   console.log("Redirect");
                   res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);  
 
@@ -66,10 +64,10 @@ wifidog.setup = function( app, gateways, clients ) {
    */
 	app.get( '/gw_message.php', function( req, res ) {
     // Get the client IP
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var ip = req.query.ip 
     // If we have the client, send its information. Otherwise send information
     // that is generated now
-      clients.get(req.query.ip , (err, data) => {
+      clients.get(ip , (err, data) => {
       var moment = require('moment');
        var now = moment();
        console.log("IP: " + ip + ", GW-Message: " + req.query.message);
@@ -81,6 +79,7 @@ wifidog.setup = function( app, gateways, clients ) {
                clients.set(ip, data.token, data.gateway, Math.floor(now.format('x')), (err, data) => {
                
                });
+               break;
             case 'activate':
                res.redirect('/landing?token=' + data.token);
                break;
