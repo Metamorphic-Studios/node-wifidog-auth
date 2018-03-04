@@ -69,13 +69,12 @@ wifidog.setup = function( app, gateways, clients ) {
       clients.getByToken(req.query.token , (err, data) => {
       var moment = require('moment');
        var now = moment();
-       console.log("IP: " + ip + ", GW-Message: " + req.query.message);
        if(data){
           console.log(data);
          switch(req.query.message){
             case 'denied':
             case 'failed_validation':
-               clients.set(data.ip, data.token, data.gateway, Math.floor(now.format('x')), (err, data) => {
+               clients.set(data.ipAddress, data.token, data.gateway, Math.floor(now.format('x')), (err, data) => {
                
                });
                break;
