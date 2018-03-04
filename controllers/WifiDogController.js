@@ -18,7 +18,12 @@ wifidog.setup = function( app, gateways, clients ) {
   // Our logger for logging to file and console
   var logger = require(__dirname + '/../services/logger');
 	
-	/**
+   app.get('/portal', (req, res) => {
+      console.log("Succesful login for ", req.query.gw_id, req.query.token);
+      res.redirect('https://metamorphic.studio');
+   })
+
+   /**
 	 * Receive request to login
 	 */
 	app.get( '/login', function( req, res ) {
