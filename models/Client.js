@@ -24,7 +24,7 @@ class Clients {
    }
 
    getByToken(token, cb){
-      this.db.collection('clients').find({token: token}, cb);
+      this.db.collection('clients').findOne({token: token}, cb);
    }
 
    setByToken(token, socialBlob, cb){
