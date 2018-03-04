@@ -64,6 +64,7 @@ wifidog.setup = function( app, gateways, clients ) {
    */
 	app.get( '/gw_message.php', function( req, res ) {
     // Get the client IP
+   console.log(req.query);
     var ip = req.query.ip 
     // If we have the client, send its information. Otherwise send information
     // that is generated now
