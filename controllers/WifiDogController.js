@@ -47,7 +47,7 @@ wifidog.setup = function( app, gateways, clients ) {
 
             clients.set(req.query.ip, token, req.query.gw_id, Math.floor(now.format('x')), (err, data) => {
                console.log(err);
-               res.redirect('/landing?token=' + token);
+               res.redirect('/landing?token=' + token + '&gateway=' + req.query.gw_id);
                /*clients.setAuthType(req.query.ip, clients.AUTH_TYPES.AUTH_VALIDATION, (err, data) => { 
                   console.log("Redirect");
                   res.redirect('http://' + req.query.gw_address + ':' + req.query.gw_port + '/wifidog/auth?token=' + token);  
