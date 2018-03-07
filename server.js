@@ -14,6 +14,20 @@ var logger = require( __dirname + '/services/logger' );
 var express = require( 'express' );
 var app = express();
 
+//SSL
+
+if(config.http.enableSSL){
+   var fs = require('fs');
+   var https = require('https');
+   var privateKey = fs.readFileSync(config.http.key);
+   var certificate = fs.readFileSync(config.http.cert);
+
+   var httpsServer = https.createServer({
+      key: privateKey,
+      cert: certificate
+   }, app);
+}
+
 var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
@@ -51,5 +65,6 @@ var http = require('http');
 httpServer = http.createServer(app);
 
 // Make the server listen
+httpsServer.listen(config.http.httpsPort);
 httpServer.listen( config.http.port );
 logger.info( 'Listening on port ' + config.http.port + ' with SSL ' + config.http.enableSSL );

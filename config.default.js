@@ -16,7 +16,10 @@ config.app.mode.current = config.app.mode.DEVELOPMENT;
 // HTTP server configuration
 config.http = {}
 config.http.port = (config.app.mode.current == config.app.mode.DEVELOPMENT ) ? 3001 : 80;
-config.http.enableSSL = false;
+config.http.httpsPort = 443;
+config.http.enableSSL = true;
+config.http.key = '';
+config.http.cert = '';
 
 // Log files
 config.logger = {}
@@ -25,11 +28,6 @@ config.logger.consoleFile = __dirname + '/console.log';
 config.logger.maxFileSize = 1000000;
 config.logger.maxFiles = 1;
 
-// Google OAuth
-config.google = {}
-config.google.clientID = "Your ID Here";
-config.google.secret = "Your secret Here";
-config.google.callbackURL = "http://yourdomain.com:3001/auth/google/callback";
 
 // Timeouts in milliseconds
 config.timeouts = {}
